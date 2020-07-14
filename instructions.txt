@@ -1,6 +1,6 @@
-1- From the project's root directory, run this command:
-    - For Windows: virtual_env\Scripts\activate
-    - For Ubuntu/Mac: virtual_env/Scripts/activate
+1- Make sure you've 'python' and 'pip' installed on your system.
+2- Once you're in the project's root directory, install requirements from 'requirements.txt' using below command:
+    pip install -r requirements.txt
 3- Run this command inside the project directory:
     python manage.py runserver 8000
    After running this command, server should start.
