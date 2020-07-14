@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Teacher Detail</title>
+</head>
+<body>
+
+<p>First Name: {{teacher.first_name}}</p>
+<p>Last Name: {{teacher.last_name}}</p>
+<p>Email: {{teacher.email}}</p>
+<p>Phone: {{teacher.phone}}</p>
+<p>Room No: {{teacher.room_no}}</p>
+<p>Subjects: {% for s in teacher.subjects.all %}{{s.name}}{%if not forloop.last%}, {%endif%}{% endfor %}</p>
+<p>Profile picture:</p>
+<p><img src="{%if teacher.profile_picture%}{{teacher.profile_picture.url}}{%endif%}"></p>
+
+
+</body>
+</html>

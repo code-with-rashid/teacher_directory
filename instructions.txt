@@ -1,0 +1,31 @@
+1- From the project's root directory, run this command:
+    - For Windows: virtual_env\Scripts\activate
+    - For Ubuntu/Mac: virtual_env/Scripts/activate
+3- Run this command inside the project directory:
+    python manage.py runserver 8000
+   After running this command, server should start.
+4- Visit this page to view 'directory':
+    http://127.0.0.1:8000/
+   This will redirect to 'http://127.0.0.1:8000/directory/teachers/'.
+   Here you can see list of teachers. I'm showing only first_name, last_name and email on the list page.
+5- There are 2 filters at the top:
+   1- In the 'Last name starts with' filter, you can only provide first letter of the last name of the teacher.
+   2- In the 'Subject name' filter, you can pass 1 subject at time to search for it's teacher.
+6- There is a link on the 'first name' of the teacher, once you'll click on it, it will take you to the detail page.
+7- In order to import import teachers from CSV into the system:
+    7.1- Go to this url: http://127.0.0.1:8000/admin/login/
+    7.2- Provide following username and password:
+       - username: admin
+       - password: admin@123$
+    7.3- Once logged in, click on 'Teachers' menu under 'Directory', that will show all the teachers.
+    7.4- Inside teachers listing page, click on 'IMPORT' button on top right section.
+    7.5- Choose CSV file. Make sure CSV file has following headers:
+    first_name,last_name,profile_picture,email,phone,room_no,subjects
+    Note: Sample file is already given in the root directory.
+    7.6- Select 'csv' format.
+    7.7- Click on 'Submit' button. If there are no errors, that will provide you with the preview of the csv data.
+    7.8- If no image is provided, default image profile image will be '21167.JPG'.
+    7.9- Click on Confirm Import. Once clicked it will import teachers into the system.
+8- To export order:
+    8.1- Go back to 'teachers listing page' and click on 'Export' button on top right.
+    8.2- Select the format and click 'SUBMIT' button, that will export the teachers.

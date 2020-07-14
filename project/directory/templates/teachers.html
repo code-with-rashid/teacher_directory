@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Directory</title>
+</head>
+<body>
+    <div style="text-align:center;">
+        <p><b>Filters</b></p>
+        <p>
+            Last name starts with: &nbsp;&nbsp;
+            <input type="text" id="id_last_name_starts" value="{{request.GET.last_name_starts}}">
+        </p>
+
+        <p>
+            Subject name: &nbsp;&nbsp;
+            <input type="text" id="id_subject" value="{{request.GET.subject}}">
+        </p>
+        <p><button type="button" id="search">Search</button></p>
+    </div>
+
+    <br><br><br><br><br>
+
+    <table width="100%">
+        <thead>
+            <tr>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>Email Address</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for teacher in teacher_list %}
+            <tr>
+                <th><a href="{{teacher.get_detail_url}}">{{ teacher.first_name }}</a></th>
+                <th>{{ teacher.last_name }}</th>
+                <th>{{ teacher.email }}</th>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha256-4+XzXVhsDmqanXGHaHvgh1gMQKX40OUvDEBTu8JcmNs=" crossorigin="anonymous"></script>
+    <script>
+        function updateQueryStringParameter(uri, key, value) {
+          var re = new RegExp("([?&])" + key + "=.*?(&|$)", "i");
+          var separator = uri.indexOf('?') !== -1 ? "&" : "?";
+          if (uri.match(re)) {
+            return uri.replace(re, '$1' + key + "=" + value + '$2');
+          }
+          else {
+            return uri + separator + key + "=" + value;
+          }
+        }
+
+        $("#id_last_name_starts").keypress(function(){
+            if($(this).val().length>0){
+                return false;
+            }
+        });
+
+        $(document).on("click", "#search", function(){
+            var url = $(location).attr("href");
+            var last_name_starts = $("#id_last_name_starts").val();
+            var new_url = updateQueryStringParameter(url, 'last_name_starts', last_name_starts);
+            var subject = $("#id_subject").val();
+            new_url = updateQueryStringParameter(new_url, 'subject', subject);
+            window.location.href = new_url;
+        });
+    </script>
+</body>
+</html>
