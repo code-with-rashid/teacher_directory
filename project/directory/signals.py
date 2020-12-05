@@ -5,9 +5,9 @@ from django.dispatch import receiver
 from directory.models import Teacher
 
 
-@receiver(m2m_changed, sender=Teacher.subjects.through)
+@receiver(m2m_changed, sender=Teacher.subjects_taught.through)
 def subjects_changed(sender, **kwargs):
-    if kwargs['instance'].subjects.count() > 5:
+    if kwargs['instance'].subjects_taught.count() > 5:
         raise ValidationError("You can't assign more than 5 subjects")
 
 

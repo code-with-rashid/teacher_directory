@@ -8,10 +8,10 @@
 
 <p>First Name: {{teacher.first_name}}</p>
 <p>Last Name: {{teacher.last_name}}</p>
-<p>Email: {{teacher.email}}</p>
-<p>Phone: {{teacher.phone}}</p>
-<p>Room No: {{teacher.room_no}}</p>
-<p>Subjects: {% for s in teacher.subjects.all %}{{s.name}}{%if not forloop.last%}, {%endif%}{% endfor %}</p>
+<p>Email: {{teacher.email_address}}</p>
+<p>Phone: {{teacher.phone_number}}</p>
+<p>Room No: {{teacher.room_number}}</p>
+<p>Subjects: {% for s in teacher.subjects_taught.all %}{{s.name}}{%if not forloop.last%}, {%endif%}{% endfor %}</p>
 <p>Profile picture:</p>
 <p><img src="{%if teacher.profile_picture%}{{teacher.profile_picture.url}}{%endif%}"></p>
 

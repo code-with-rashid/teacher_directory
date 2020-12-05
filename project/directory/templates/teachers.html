@@ -1,3 +1,5 @@
+{% load static %}
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -17,6 +19,7 @@
             <input type="text" id="id_subject" value="{{request.GET.subject}}">
         </p>
         <p><button type="button" id="search">Search</button></p>
+        <p><button type="button" id="clear">Clear</button></p>
     </div>
 
     <br><br><br><br><br>
@@ -34,39 +37,13 @@
             <tr>
                 <th><a href="{{teacher.get_detail_url}}">{{ teacher.first_name }}</a></th>
                 <th>{{ teacher.last_name }}</th>
-                <th>{{ teacher.email }}</th>
+                <th>{{ teacher.email_address }}</th>
             </tr>
             {% endfor %}
         </tbody>
     </table>
 
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha256-4+XzXVhsDmqanXGHaHvgh1gMQKX40OUvDEBTu8JcmNs=" crossorigin="anonymous"></script>
-    <script>
-        function updateQueryStringParameter(uri, key, value) {
-          var re = new RegExp("([?&])" + key + "=.*?(&|$)", "i");
-          var separator = uri.indexOf('?') !== -1 ? "&" : "?";
-          if (uri.match(re)) {
-            return uri.replace(re, '$1' + key + "=" + value + '$2');
-          }
-          else {
-            return uri + separator + key + "=" + value;
-          }
-        }
-
-        $("#id_last_name_starts").keypress(function(){
-            if($(this).val().length>0){
-                return false;
-            }
-        });
-
-        $(document).on("click", "#search", function(){
-            var url = $(location).attr("href");
-            var last_name_starts = $("#id_last_name_starts").val();
-            var new_url = updateQueryStringParameter(url, 'last_name_starts', last_name_starts);
-            var subject = $("#id_subject").val();
-            new_url = updateQueryStringParameter(new_url, 'subject', subject);
-            window.location.href = new_url;
-        });
-    </script>
+    <script src='{% static "directory/js/teachers.js" %}?v=1.0'></script>
 </body>
 </html>
