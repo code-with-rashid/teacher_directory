@@ -30,11 +30,11 @@
         Note: Sample file is already given in the root directory.
     6. Select <b>csv</b> format.
     7. Click on <b>Submit</b> button. If there are no errors, that will provide you with the preview of the csv data.
-    8. If no image is provided, default image profile image will be '21167.JPG'.
+    8. If no image is provided, default image profile image will be <b>placeholder.png</b>.
     9. Click on Confirm Import. Once clicked it will import teachers into the system.
 10. To export order:
-    1. Go back to 'teachers listing page' and click on 'Export' button on top right.
-    2. Select the format and click 'SUBMIT' button, that will export the teachers.
+    1. Go back to <b>teachers listing page</b> and click on <b>Export</b> button on top right.
+    2. Select the format and click <b>SUBMIT</b> button, that will export the teachers.
     
 - <b>Note</b>
     -   In order to add more profile images, upload images to `project/static/images` folder and run following command:
