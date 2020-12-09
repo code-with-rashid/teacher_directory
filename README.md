@@ -36,3 +36,6 @@
     1. Go back to 'teachers listing page' and click on 'Export' button on top right.
     2. Select the format and click 'SUBMIT' button, that will export the teachers.
     
+- <b>Note</b>
+    -   In order to add more profile images, upload images to `project/static/images` folder and run following command:
+    <br>`python3 manage.py collectstatic`

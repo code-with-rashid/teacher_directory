@@ -69,7 +69,7 @@ class TeacherResource(resources.ModelResource):
         if str(row['profile_picture']).strip() and row['profile_picture'] in image_list:
             row['profile_picture'] = "%s/%s" % (images_folder_path, row['profile_picture'])
         else:
-            row['profile_picture'] = "%s/21167.JPG" % images_folder_path
+            row['profile_picture'] = "%s/placeholder.png" % images_folder_path
 
         # # --------------------------------------
         # Generate temporary file and download image from provided URL
