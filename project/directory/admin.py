@@ -1,11 +1,15 @@
 import logging
 import os
 import traceback
+import urllib
 from collections import OrderedDict
 from copy import deepcopy
 
+import requests
 from django.contrib import admin
 from django.core.exceptions import ValidationError
+from django.core.files import File
+from django.core.files.temp import NamedTemporaryFile
 from django.db.transaction import TransactionManagementError
 from django.utils.encoding import force_str
 from import_export import resources, fields
@@ -15,7 +19,8 @@ from import_export.admin import ImportExportModelAdmin
 from import_export.results import RowResult
 from import_export.widgets import ForeignKeyWidget, ManyToManyWidget
 
-from project.settings import STATICFILES_DIRS
+from project import settings
+from project.settings import STATICFILES_DIRS, SITE_URL
 from .models import Subject, Teacher
 
 logger = logging.getLogger(__name__)
@@ -39,11 +44,6 @@ class TeacherResource(resources.ModelResource):
         )
 
     def before_import_row(self, row, row_number=None, **kwargs):
-        images_dir = STATICFILES_DIRS[0] + '/images'
-        image_list = []
-        for file in os.listdir(images_dir):
-            image_list.append(file)
-
         new_row = OrderedDict()
         for item in row.items():
             old_key = item[0]
@@ -52,13 +52,34 @@ class TeacherResource(resources.ModelResource):
                 new_row[new_key] = item[1]
             else:
                 new_row[old_key] = item[1]
+        subjects = [s.strip().title() for s in new_row.get('subjects_taught').split(',')]
+        new_row['subjects_taught'] = ','.join(subjects)
         row = new_row
 
-        if str(row['profile_picture']).strip():
-            if row['profile_picture'] in image_list:
-                row['profile_picture'] = "/static/images/%s" % row['profile_picture']
+
+        images_dir = STATICFILES_DIRS[0] + '/images'
+        image_list = []
+        for file in os.listdir(images_dir):
+            image_list.append(file)
+        # Create subjects if not found
+        for subject in subjects:
+            Subject.objects.get_or_create(name__iexact=subject, defaults={'name':subject})
+
+        images_folder_path = '%s/media/static/images/' % SITE_URL
+        if str(row['profile_picture']).strip() and row['profile_picture'] in image_list:
+            row['profile_picture'] = "%s/%s" % (images_folder_path, row['profile_picture'])
         else:
-            row['profile_picture'] = "/static/images/21167.JPG"
+            row['profile_picture'] = "%s/21167.JPG" % images_folder_path
+
+        # # --------------------------------------
+        # Generate temporary file and download image from provided URL
+        tmp_file = NamedTemporaryFile(delete=True, dir=f'{settings.MEDIA_ROOT}')
+        tmp_file.write(requests.get(row['profile_picture']).content)
+        tmp_file.flush()
+
+        image_name = row['profile_picture'].split('/')[-1]
+        # Add file object to row
+        row['profile_picture'] = File(tmp_file, image_name)
         return row
 
     def get_field_names(self):

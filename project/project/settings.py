@@ -27,6 +27,9 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
+SITE_DOMAIN = '127.0.0.1:8000'
+SITE_URL = 'http://%s' % SITE_DOMAIN
+
 
 # Application definition
 

@@ -9,6 +9,3 @@ from directory.models import Teacher
 def subjects_changed(sender, **kwargs):
     if kwargs['instance'].subjects_taught.count() > 5:
         raise ValidationError("You can't assign more than 5 subjects")
-
-
-# m2m_changed.connect(subjects_changed, sender=BlogSite.regions.through)
